@@ -12,9 +12,6 @@ function Pagination({ showPerPageRecord, onPaginationHandler, totalDataLength })
     const [counter, setCounter] = useState(1);
 
 
-    console.log(Math.ceil(totalDataLength / showPerPageRecord));
-
-
     useEffect(() => {
         const value = showPerPageRecord * counter;
         onPaginationHandler(value - showPerPageRecord, value);
@@ -45,14 +42,13 @@ function Pagination({ showPerPageRecord, onPaginationHandler, totalDataLength })
                 <ul className="pagination">
                     <li className="page-item"><button onClick={() => onButtonClick("prev")} className='page-link'>Previous</button></li>
                     {new Array(Math.ceil(totalDataLength / showPerPageRecord)).fill("").map((el, index) => (
-                        <li key={index} class={`page-item ${index + 1 === counter ? "active" : null}`}>
-                            <a
-                                class="page-link"
-                                href="!#"
+                        <li key={index} className={`page-item  ${index + 1 === counter ? "active"  : null}`}>
+                            <button
+                                className="page-link "
                                 onClick={() => setCounter(index + 1)}
                             >
                                 {index + 1}
-                            </a>
+                            </button>
                         </li>
                     ))}
                     <li className="page-item"><button onClick={() => onButtonClick("next")} className='page-link'>Next</button></li>

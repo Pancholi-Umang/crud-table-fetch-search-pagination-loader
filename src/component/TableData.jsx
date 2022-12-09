@@ -10,6 +10,13 @@ const TableData = () => {
   const [email, setEmail] = useState("");
   const [editItem, setEditItem] = useState(true);
   const ScrollRef = useRef(null);
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 3000);
+  }, []);
 
   //pagination
   const [showPerPageRecord, setShowPageRecord] = useState(2) //per page ketla records batavva te chhe
@@ -133,99 +140,109 @@ const TableData = () => {
         placeholder="Search here…"
         onChange={SearchMyData}
       />
+      {
+        loading ? (
+          <div class="text-center my-5">
+            <button class="btn btn-primary" type="button" disabled>
+              Loading...
+              &nbsp;
+              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            </button>
+          </div>
+        ) :
 
-      <table className="table text-center">
-        <thead>
-          <tr className="table-dark">
-            <th>Id</th>
-            <th>Name</th>
-            <th>Username</th>
-            <th>email</th>
-            <th>Edit</th>
-            <th>Delete</th>
-          </tr>
-          <tr className="table-dark">
-            <th></th>
-            <th>
-              <input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              // required
-              />
-              {/* <input type="text" ref={post_name} /> */}
-            </th>
-            <th>
-              <input
-                type="text"
-                value={username}
-                onChange={(e) => setUserName(e.target.value)}
-              // required
-              />
-              {/* <input type="text" ref={post_username} /> */}
-            </th>
-            <th>
-              <input
-                type="text"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              // required
-              />
-              {/* <input type="text" ref={post_email} /> */}
-            </th>
-            <th colSpan={2}>
-              <button
-                className="btn btn-primary"
-                onClick={SubmitData}
-                type="submit"
-              >
-                Add
-              </button>
-            </th>
-          </tr>
-        </thead>
-        <tbody className="tableHover">
-          {finalData.slice(pagination.start, pagination.end).map((value) => {
-            return (
-              <tr key={value.id}>
-                <td>{value.id}</td>
-                <td>{value.name}</td>
-                <td>{value.username}</td>
-                <td>{value.email}</td>
-                {/* <td>{value.address.city}</td> */}
-                <td>
-                  {editItem ? (
-                    <button
-                      onClick={() => updte(value.id)}
-                      className="border-0 btn-success"
-                    >
-                      Edit
-                    </button>
-                  ) : (
-                    <button
-                      onClick={() => updte(value.id)}
-                      className="border-0 btn-success"
-                    >
-                      Update
-                    </button>
-                  )}
-                </td>
-                <td>
-                  <button
-                    onClick={() => del(value.id)}
-                    className="border-0 btn-danger"
-                  >
-                    Delete
-                  </button>
-                </td>
+          (<table className="table text-center">
+            <thead>
+              <tr className="table-dark">
+                <th>Id</th>
+                <th>Name</th>
+                <th>Username</th>
+                <th>email</th>
+                <th>Edit</th>
+                <th>Delete</th>
               </tr>
-            );
-          })}
-        </tbody>
-      </table>
+              <tr className="table-dark">
+                <th></th>
+                <th>
+                  <input
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  // required
+                  />
+                  {/* <input type="text" ref={post_name} /> */}
+                </th>
+                <th>
+                  <input
+                    type="text"
+                    value={username}
+                    onChange={(e) => setUserName(e.target.value)}
+                  // required
+                  />
+                  {/* <input type="text" ref={post_username} /> */}
+                </th>
+                <th>
+                  <input
+                    type="text"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  // required
+                  />
+                  {/* <input type="text" ref={post_email} /> */}
+                </th>
+                <th colSpan={2}>
+                  <button
+                    className="btn btn-primary"
+                    onClick={SubmitData}
+                    type="submit"
+                  >
+                    Add
+                  </button>
+                </th>
+              </tr>
+            </thead>
+            <tbody className="tableHover">
+              {finalData.slice(pagination.start, pagination.end).map((value) => {
+                return (
+                  <tr key={value.id}>
+                    <td>{value.id}</td>
+                    <td>{value.name}</td>
+                    <td>{value.username}</td>
+                    <td>{value.email}</td>
+                    {/* <td>{value.address.city}</td> */}
+                    <td>
+                      {editItem ? (
+                        <button
+                          onClick={() => updte(value.id)}
+                          className="border-0 btn-success"
+                        >
+                          Edit
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => updte(value.id)}
+                          className="border-0 btn-success"
+                        >
+                          Update
+                        </button>
+                      )}
+                    </td>
+                    <td>
+                      <button
+                        onClick={() => del(value.id)}
+                        className="border-0 btn-danger"
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>)}
       <div ref={ScrollRef} />
       <Pagination showPerPageRecord={showPerPageRecord} onPaginationHandler={onPaginationHandler} totalDataLength={finalData.length} />
-    </div > 
+    </div >
   );
 };
 
