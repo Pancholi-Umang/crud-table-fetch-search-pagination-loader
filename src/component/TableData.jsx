@@ -62,7 +62,7 @@ const TableData = () => {
     fetch(`https://jsonplaceholder.typicode.com/users/${delbtnid}`, {
       method: "DELETE",
     });
-    setFinalData(finalData.filter((product) => product.id !== delbtnid));
+    setFinalData(finalData );
   };
 
   const SubmitData = (e) => {
